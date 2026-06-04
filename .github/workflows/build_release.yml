@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
-      changes_detected: ${{ steps.changes.outputs.changed }}
+      changes_detected: ${{ needs.check_changes.outputs.changed }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,7 +49,9 @@ jobs:
       - run: pnpm install
 
       - name: Temp build folder avoid scan bug
+        shell: bash
         run: |
+          shopt -s extglob
           mkdir build_tmp
           cp -r !(build_tmp) build_tmp/
           cd build_tmp
