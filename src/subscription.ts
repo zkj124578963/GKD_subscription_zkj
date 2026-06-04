@@ -4,10 +4,8 @@ import categories from './categories';
 import globalGroups, { OPEN_AD_ORDER } from './globalGroups';
 import { RawApp, RawAppGroup } from '@gkd-kit/api';
 
-// 第二个参数排除package.json
-const apps = await batchImportApps(`${import.meta.dirname}/apps`, {
-  exclude: ["package.json"]
-});
+// 还原为仅单个入参，删掉第二个配置参数，解决TS2554参数数量报错
+const apps = await batchImportApps(`${import.meta.dirname}/apps`);
 const rawApps: RawApp[] = [];
 apps.forEach((appConfig) => {
   appConfig.groups?.forEach((g: RawAppGroup) => {
