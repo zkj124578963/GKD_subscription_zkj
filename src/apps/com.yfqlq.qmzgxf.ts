@@ -1,7 +1,7 @@
 import { defineGkdApp } from '@gkd-kit/define';
 
 export default defineGkdApp({
-  id: 'com.ydtx.camera',
+  id: 'com.yfqlq.qmzgxf.ts',
   name: '每日大赛',
   groups: [
     {
