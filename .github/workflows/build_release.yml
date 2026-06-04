@@ -48,11 +48,15 @@ jobs:
 
       - run: pnpm install
 
-      - name: Hide package.json temporarily
-        run: mv package.json _tmp_package.json
-      - run: pnpm run build
-      - name: Restore package.json
-        run: mv _tmp_package.json package.json
+      - name: Temp build folder avoid scan bug
+        run: |
+          mkdir build_tmp
+          cp -r !(build_tmp) build_tmp/
+          cd build_tmp
+          pnpm run build
+          cp -r dist ../
+          cd ..
+          rm -rf build_tmp
 
       - id: version
         run: |
