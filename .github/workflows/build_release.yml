@@ -46,17 +46,13 @@ jobs:
 
       - uses: pnpm/action-setup@v4
 
-      - name: Hide package.json avoid scan error
+      - run: pnpm install
 
-        run: |
-          mv package.json _tmp_package.json
+      - name: Hide package.json temporarily
+        run: mv package.json _tmp_package.json
       - run: pnpm run build
-
       - name: Restore package.json
-        run: |
-          mv _tmp_package.json package.json
-
-      - run: pnpm run build
+        run: mv _tmp_package.json package.json
 
       - id: version
         run: |
