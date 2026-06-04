@@ -4,8 +4,10 @@ import categories from './categories';
 import globalGroups, { OPEN_AD_ORDER } from './globalGroups';
 import { RawApp, RawAppGroup } from '@gkd-kit/api';
 
-// 固定仅读取src/apps，不会遍历到根目录package.json
-const apps = await batchImportApps(`${import.meta.dirname}/apps`);
+// 第二个参数排除package.json
+const apps = await batchImportApps(`${import.meta.dirname}/apps`, {
+  exclude: ["package.json"]
+});
 const rawApps: RawApp[] = [];
 apps.forEach((appConfig) => {
   appConfig.groups?.forEach((g: RawAppGroup) => {
