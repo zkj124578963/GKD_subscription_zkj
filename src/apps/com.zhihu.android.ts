@@ -17,9 +17,10 @@ export default defineGkdApp({
           excludeActivityIds: [
             '.app.SearchActivity',
             '.comment.ui.activity.CommentListActivity',
+            '.feature.short_container_feature.ui.ShortContainerHostActivity',
           ],
           matches:
-            '([vid="btn_skip"][visibleToUser=true]) || ([text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true])',
+            '([vid="btn_skip"][visibleToUser=true]) || ([text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true])',
           exampleUrls: 'https://e.gkd.li/e129aaa6-bf4f-4455-9242-a6779667d814',
           snapshotUrls: [
             'https://i.gkd.li/i/18221451',
@@ -28,6 +29,7 @@ export default defineGkdApp({
           excludeSnapshotUrls: [
             'https://i.gkd.li/i/18221225',
             'https://i.gkd.li/i/23141429',
+            'https://i.gkd.li/i/24229324',
           ],
         },
       ],
@@ -83,12 +85,14 @@ export default defineGkdApp({
             '.feature.short_container_feature.ui.ShortContainerHostActivity',
           ],
           matches:
-            '@ViewGroup[clickable=true][childCount=1] <(2,4) ViewGroup -(2,3) ViewGroup[childCount>1] >(1,2) [text*="广告"]',
+            '@ViewGroup[clickable=true][childCount=1] <(2,3,4) ViewGroup -(2,3) ViewGroup[childCount>1] >(1,2) [text*="广告"]',
+          exampleUrls: 'https://e.gkd.li/60c4dea8-99c1-4a6f-aca6-a098b5ed76d7',
           snapshotUrls: [
             'https://i.gkd.li/i/14192451',
             'https://i.gkd.li/i/18217217',
             'https://i.gkd.li/i/19591989',
             'https://i.gkd.li/i/21813914',
+            'https://i.gkd.li/i/24214771',
           ],
         },
         {
@@ -219,6 +223,15 @@ export default defineGkdApp({
             '@ViewGroup[childCount=1][clickable=true][visibleToUser=true][getChild(0).name$="SvgView"] - [text="广告"]',
           exampleUrls: 'https://e.gkd.li/d81b6bc4-f4f9-466d-8edb-7af27c707ca5',
           snapshotUrls: 'https://i.gkd.li/i/20711018',
+        },
+        {
+          key: 2,
+          name: '优质答主推荐',
+          fastQuery: true,
+          activityIds:
+            'com.zhihu.android.feature.short_container_feature.ui.ShortContainerHostActivity',
+          matches: '@[vid="ic_close"][clickable=true] -n [text="更多优质答主"]',
+          snapshotUrls: 'https://i.gkd.li/i/24335648',
         },
       ],
     },

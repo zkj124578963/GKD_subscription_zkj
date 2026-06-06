@@ -177,5 +177,58 @@ export default defineGkdApp({
         },
       ],
     },
+    {
+      key: 6,
+      name: '功能类-评论区-自动展开回复',
+      desc: '自动展开更多回复',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: 'com.xingin.matrix.notedetail.NoteDetailActivity',
+          matches:
+            '@[clickable=true] > [vid="loadMoreTV"][text^="展开"][text$="回复"]',
+          snapshotUrls: 'https://i.gkd.li/i/25048251',
+        },
+      ],
+    },
+    {
+      key: 7,
+      name: '局部广告-你可能感兴趣的人',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: 'com.xingin.xhs.index.v2.IndexActivityV2',
+          matches: '[text="你可能感兴趣的人"] +2 Button[text="关闭"]',
+          snapshotUrls: 'https://i.gkd.li/i/25244655',
+        },
+      ],
+    },
+    {
+      key: 8,
+      name: '局部广告-关闭首页信息流中推荐博主',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: 'com.xingin.xhs.index.v2.IndexActivityV2',
+          matches:
+            '[vid="recommend_close"][clickable=true][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/25245325',
+        },
+      ],
+    },
+    {
+      key: 9,
+      name: '局部广告-直播间各种卡片',
+      activityIds: 'com.xingin.alpha.audience.v2.AlphaAudienceActivityV2',
+      rules: [
+        {
+          key: 1,
+          fastQuery: true,
+          matches:
+            '@ViewGroup[clickable=true][visibleToUser=true] - ViewGroup <<n [vid="canvasLayout"]',
+          snapshotUrls: 'https://i.gkd.li/i/25245250',
+        },
+      ],
+    },
   ],
 });

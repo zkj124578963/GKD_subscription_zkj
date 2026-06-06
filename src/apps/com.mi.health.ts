@@ -6,7 +6,7 @@ export default defineGkdApp({
   groups: [
     {
       key: 1,
-      name: '评价提示-好评弹窗',
+      name: '评价提示',
       fastQuery: true,
       matchTime: 10000,
       actionMaximum: 1,
@@ -27,7 +27,7 @@ export default defineGkdApp({
     },
     {
       key: 2,
-      name: '权限提示-权限提醒',
+      name: '权限提示-后台运行',
       fastQuery: true,
       actionMaximum: 1,
       resetMatch: 'app',
@@ -82,6 +82,32 @@ export default defineGkdApp({
             'https://i.gkd.li/i/13537840',
             'https://i.gkd.li/i/13626328',
           ],
+        },
+      ],
+    },
+    {
+      key: 5,
+      name: '通知提示-公告栏',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: 'com.xiaomi.fitness.main.MainActivity',
+          matches:
+            '[vid="bannerAnnouncementView"] [vid="iv_close"][clickable=true]',
+          snapshotUrls: 'https://i.gkd.li/i/24099864',
+        },
+      ],
+    },
+    {
+      key: 6,
+      name: '权限提示-麦克风',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: 'com.xiaomi.fitness.baseui.common.CommonBaseActivity',
+          matches:
+            '@[vid="close_instruction"][clickable=true] - [text^="鼾声梦话监测开关因麦克风未授权而关闭"]',
+          snapshotUrls: 'https://i.gkd.li/i/24229351',
         },
       ],
     },

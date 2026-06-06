@@ -17,10 +17,11 @@ export default defineGkdApp({
             '.ui.activity.HomeActivity',
             '.ui.activity.MainFrameActivity',
           ],
-          matches: '@Image[clickable=true][text="webp"] +5 [text="立即升级"]',
+          matches: '@Image[clickable=true] +5 [text="立即升级"]',
           snapshotUrls: [
             'https://i.gkd.li/i/13195645',
             'https://i.gkd.li/i/23936506',
+            'https://i.gkd.li/i/24786015',
           ],
         },
       ],
@@ -155,6 +156,13 @@ export default defineGkdApp({
           exampleUrls: 'https://e.gkd.li/0f850878-2b6a-46c7-86aa-28329df0993c',
           snapshotUrls: 'https://i.gkd.li/i/15140800',
         },
+        {
+          key: 3,
+          name: '多多视频金币提示',
+          activityIds: '.ui.activity.HomeActivity',
+          matches: '[text^="看5分钟视频"] -2 Image',
+          snapshotUrls: 'https://i.gkd.li/i/25088623',
+        },
       ],
     },
     {
@@ -251,6 +259,7 @@ export default defineGkdApp({
             'com.xunmeng.pinduoduo.activity.NewPageMaskActivity',
             'com.xunmeng.pinduoduo.ui.activity.HomeActivity',
           ],
+          action: 'clickCenter',
           matches: 'Button[text="关闭弹窗" || desc="关闭弹窗"][clickable=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/13927594',

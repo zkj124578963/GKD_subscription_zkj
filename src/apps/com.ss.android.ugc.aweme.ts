@@ -16,7 +16,7 @@ export default defineGkdApp({
           fastQuery: true,
           excludeActivityIds: '.search.activity.SearchResultActivity',
           matches:
-            '[text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/202942ce-259c-4b9d-b3b3-06afbac8145f',
           snapshotUrls: 'https://i.gkd.li/i/13216121',
           excludeSnapshotUrls: 'https://i.gkd.li/i/17811608',
@@ -59,22 +59,28 @@ export default defineGkdApp({
     {
       key: 10,
       name: '权限提示-通知权限',
-      desc: '点击[暂不]/[以后再说]',
+      desc: '点击[暂不]/[以后再说]/[禁止]',
       fastQuery: true,
       actionMaximum: 1,
       resetMatch: 'app',
-      activityIds: '.main.MainActivity',
+      activityIds: [
+        '.main.MainActivity',
+        '.profile.ui.UserProfileActivity',
+        '.detail.ui.DetailActivity',
+      ],
       rules: [
         {
           key: 1,
           matches: [
-            '[text^="打开私信通知" || text="开启朋友的消息通知" || text="及时获得消息提醒"][visibleToUser=true]',
-            '[text="以后再说" || text="暂不开启"][visibleToUser=true]',
+            '[text^="打开私信通知" || text="开启朋友的消息通知" || text="及时获得消息提醒" || text$="评论回复提醒"][visibleToUser=true]',
+            '[text="以后再说" || text="暂不开启" || text="禁止"][visibleToUser=true]',
           ],
           snapshotUrls: [
-            'https://i.gkd.li/i/13669790',
+            'https://i.gkd.li/i/13669790', //这些开启通知请求形式全都不一样！
             'https://i.gkd.li/i/18417891',
             'https://i.gkd.li/i/18419574',
+            'https://i.gkd.li/i/25024525',
+            'https://i.gkd.li/i/25063241',
           ],
         },
       ],
@@ -338,34 +344,98 @@ export default defineGkdApp({
     {
       key: 26,
       name: '功能类-自动领取别人发的红包',
+      desc: '点击 ①抖音红包 ②弹窗-开红包 ③返回 ④x掉已领完弹窗',
+      fastQuery: true,
+      activityIds: '.fund.redpacket.RedPacketReceiveActivity',
       rules: [
         {
-          key: 0,
-          fastQuery: true,
+          key: 1,
+          name: '①点击[抖音红包]',
           activityIds: '.main.MainActivity',
           matches:
-            'FrameLayout[getChild(0).desc$="的头像"] + ViewGroup >3 @FrameLayout > [text="抖音红包"][visibleToUser=true]',
+            'FrameLayout[width>10] -2 @LinearLayout >3 [text="抖音红包"][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/6c963e99-1a74-40a5-bf84-a9353c27acdb',
-          snapshotUrls: 'https://i.gkd.li/i/22761277',
-          excludeSnapshotUrls: 'https://i.gkd.li/i/22849224', // 自己发的不领取
+          snapshotUrls: [
+            'https://i.gkd.li/i/22761277',
+            'https://i.gkd.li/i/25190308',
+          ],
+          excludeSnapshotUrls: 'https://i.gkd.li/i/22849224', // (右边)自己发的不领取 [width=0]
         },
         {
-          preKeys: [0],
-          key: 1,
-          fastQuery: true,
-          activityIds: '.fund.redpacket.RedPacketReceiveActivity',
+          preKeys: [1],
+          key: 2,
+          name: '②红包弹窗-点击[开]',
           matches:
             '@FrameLayout[clickable=true][width=height] -2 [text="大吉大利"][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/e8b822c1-c289-4802-85a4-994093024b24',
           snapshotUrls: 'https://i.gkd.li/i/22761510',
         },
         {
-          preKeys: [1],
-          fastQuery: true,
-          activityIds: '.fund.redpacket.RedPacketReceiveActivity',
+          preKeys: [2],
+          key: 3,
+          name: '③已领-点击[返回]',
           matches: '[vid="iv_back"][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/f92c1412-8111-40bc-8188-24f2c004c55c',
           snapshotUrls: 'https://i.gkd.li/i/22761554',
+        },
+        {
+          key: 4,
+          preKeys: [1, 2, 3],
+          name: '④已领完弹窗-x掉',
+          matches:
+            '@ImageView[clickable=true] - * > [text="红包已领完"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/25190699',
+        },
+      ],
+    },
+    {
+      key: 27,
+      name: '功能类-自动抢口令红包',
+      desc: '点击 ①口令红包 ②弹窗 ③一键发口令',
+      fastQuery: true,
+      rules: [
+        {
+          key: 1,
+          name: '①点进口令红包',
+          activityIds: [
+            '.main.MainActivity',
+            '.fund.redpacket.RedPacketReceiveActivity',
+          ],
+          matches: '@ImageView + [text="抖音红包「口令」"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/25121991',
+        },
+        {
+          key: 2,
+          name: '②弹窗-点击红包',
+          activityIds: '.fund.redpacket.RedPacketReceiveActivity',
+          matches: 'ImageView < @[clickable=true] -2 [text="发口令开红包"]',
+          snapshotUrls: 'https://i.gkd.li/i/25122030',
+        },
+        {
+          key: 3,
+          name: '③一键发口令',
+          activityIds: '.fund.redpacket.RedPacketReceiveActivity',
+          matches:
+            '[text="发口令开红包"] + LinearLayout >2 [text="一键发送到聊天"][clickable=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/25122077',
+            'https://i.gkd.li/i/25122095',
+          ],
+        },
+      ],
+    },
+    {
+      key: 28,
+      name: '权限提示-相机权限',
+      desc: '点击[以后再说]',
+      actionMaximum: 1,
+      resetMatch: 'app',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.shortvideo.ui.scan.ScanNewActivity',
+          matches: ['[text*="相机权限"]', '[text="以后再说"][clickable=true]'],
+          snapshotUrls: 'https://i.gkd.li/i/25183382',
         },
       ],
     },

@@ -44,7 +44,6 @@ export default defineGkdApp({
     {
       key: 1,
       name: '权限提示-通知权限',
-      matchTime: 10000,
       actionMaximum: 1,
       rules: [
         {
@@ -130,16 +129,25 @@ export default defineGkdApp({
             '.pb.pb.main.PbActivity',
           ],
           matches:
-            'ImageView[childCount=0] < @FrameLayout[clickable=true][childCount=1][visibleToUser=true] <4 RelativeLayout + FrameLayout >9 [text="广告"]',
+            'ImageView[childCount=0] < @FrameLayout[clickable=true][childCount=1][visibleToUser=true] <(3,4) RelativeLayout + FrameLayout >9 [text="广告"]',
           exampleUrls: 'https://e.gkd.li/0ac82700-02f3-40c6-bf45-b21e365ac84c',
           snapshotUrls: [
             'https://i.gkd.li/i/21524232',
             'https://i.gkd.li/i/21529443',
             'https://i.gkd.li/i/21556758',
+            'https://i.gkd.li/i/24520138',
           ],
         },
         {
-          preKeys: [0, 1, 2, 3, 4],
+          key: 5,
+          activityIds: '.pb.pb.main.PbActivity',
+          matches:
+            'ImageView[childCount=0] < @FrameLayout[clickable=true][childCount=1][visibleToUser=true] <2 RelativeLayout + RelativeLayout >3 [text="广告"] ',
+          exampleUrls: 'https://e.gkd.li/0d5fea40-44ac-4b47-8b3c-e8388640e37d',
+          snapshotUrls: 'https://i.gkd.li/i/24541094',
+        },
+        {
+          preKeys: [0, 1, 2, 3, 4, 5],
           activityIds: [
             '.tblauncher.MainTabActivity',
             '.pb.pb.main.PbActivity',

@@ -19,7 +19,7 @@ export default defineGkdApp({
           fastQuery: true,
           action: 'clickCenter',
           matches:
-            '[text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/74db13f0-d87d-41a3-bbbb-1b075d8ae7d6',
           snapshotUrls: 'https://i.gkd.li/i/20218520',
         },
@@ -124,7 +124,7 @@ export default defineGkdApp({
           name: '腾讯广告SDK',
           fastQuery: true,
           matches:
-            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] +n FrameLayout >(1,2) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
+            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] <n FrameLayout >(2,3) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
           snapshotUrls: 'https://i.gkd.li/i/13626900',
         },
         {
