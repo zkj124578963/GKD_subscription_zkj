@@ -45,13 +45,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 【关键调整1：先装pnpm，再装node，保证pnpm注入PATH】
       - uses: pnpm/action-setup@v5
 
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-          cache: 'pnpm' # 开启pnpm依赖缓存，加速安装
+          cache: 'pnpm'
 
       - run: pnpm install
 
@@ -62,7 +61,13 @@ jobs:
           mkdir build_tmp
           cp -r !(build_tmp) build_tmp/
           cd build_tmp
+          # 临时挪走package.json 解决GKD工具误报 Invalid app file: package.json
+          mv package.json ../tmp_package.json
+          # 补充安装node类型定义，修复TS2591/import.meta.dirname报错
+          pnpm add -D @types/node
           pnpm run build
+          # 打包结束复原配置文件
+          mv ../tmp_package.json package.json
           cp -r dist ../
           cd ..
           rm -rf build_tmp
