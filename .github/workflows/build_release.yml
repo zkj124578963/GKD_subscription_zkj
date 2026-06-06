@@ -60,7 +60,7 @@ jobs:
         run: |
           shopt -s extglob
           mkdir build_tmp
-          cp -r !(build_tmp) build_tmp/
+          cp -r src package.json pnpm-lock.yaml build_tmp/
           cd build_tmp
           pnpm run build
           cp -r dist ../
