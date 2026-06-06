@@ -61,19 +61,20 @@ jobs:
           mkdir build_tmp
           cp -r !(build_tmp) build_tmp/
           cd build_tmp
-          # 完整安装依赖+补齐类型
           pnpm install
           pnpm add -D @types/node
-          # 只在执行构建前改名，构建完马上还原
-          mv package.json package.json.tmp
-          # 临时生成空package骗过pnpm（关键：pnpm需要存在清单文件）
-          echo "{}" > package.json
-          # 执行打包
-          pnpm run build
-          # 打包结束立刻恢复原配置
-          rm package.json
-          mv package.json.tmp package.json
-          # 拷贝产物
+          # 方案：把package.json改名备份，新建同名空json放在子目录，修改构建工作目录
+          mv package.json pkg.bak
+          # 原配置存备份，新建空文件放在子目录，GKD只会读当前目录空json
+          mkdir work
+          echo "{}" > work/package.json
+          cp -r src scripts tsconfig.json work/
+          cd work
+          # 用上层备份包文件执行pnpm（--package 指向备份的pkg.bak，脚本配置全保留）
+          pnpm --package ../pkg.bak run build
+          cp -r dist ../
+          cd ../
+          mv pkg.bak package.json
           cp -r dist ../
           cd ..
           rm -rf build_tmp
