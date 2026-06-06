@@ -61,16 +61,15 @@ jobs:
           mkdir build_tmp
           cp -r !(build_tmp) build_tmp/
           cd build_tmp
-          # 第一步：安装依赖（此时package.json正常）
+          # 1.安装依赖（package.json存在）
           pnpm install
           pnpm add -D @types/node
-          # 关键：安装完立刻改名，GKD看不见package.json
-          mv package.json _package.json.bak
-          # 执行构建，目录无package.json → 不再报错Invalid app file
-          pnpm run build
-          # 构建完成还原配置
-          mv _package.json.bak package.json
-          # 复制产物
+          # 2.安装完改名package.json，GKD不会读到
+          mv package.json package.json.bak
+          # 不走pnpm run build，直接node+tsx启动构建，不再依赖pnpm读取package.json脚本
+          npx tsx ./scripts/build.ts
+          # 复原配置
+          mv package.json.bak package.json
           cp -r dist ../
           cd ..
           rm -rf build_tmp
