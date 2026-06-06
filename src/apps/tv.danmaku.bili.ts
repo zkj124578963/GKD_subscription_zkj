@@ -137,11 +137,12 @@ export default defineGkdApp({
         {
           key: 0,
           matches:
-            '[id="tv.danmaku.bili:id/shopping_close" || vid="live_game_card_close" || vid="match_close"][visibleToUser=true]',
+            '[id="tv.danmaku.bili:id/shopping_close" || vid="live_game_card_close" || vid="match_close" || vid="iv_pop_rank_guide_card_close"][visibleToUser=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/13200549',
             'https://i.gkd.li/i/22990081',
             'https://i.gkd.li/i/23098023',
+            'https://i.gkd.li/i/25238734',
           ],
         },
         {
@@ -152,6 +153,17 @@ export default defineGkdApp({
             'https://i.gkd.li/i/14782965',
             'https://i.gkd.li/i/18046573',
             'https://i.gkd.li/i/22990105',
+          ],
+        },
+        {
+          key: 2,
+          matchTime: 10000,
+          actionMaximum: 1, //防止循环展开关闭
+          matches:
+            '[vid="vertical_container"] >3 FrameLayout[clickable=true][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/24985920',
+            'https://i.gkd.li/i/25240029',
           ],
         },
       ],
@@ -216,7 +228,7 @@ export default defineGkdApp({
           key: 50,
           name: '点击[不感兴趣]/[相似内容过多]',
           matches:
-            '@[clickable=true] > [text="相似内容过多" || text="不感兴趣" || text="up主不感兴趣" || text="对该up的直播不感兴趣" || text="我不想看" || text="引人不适"]',
+            '@[clickable=true] > [text="此类内容过多" || text="相似内容过多" || text="不感兴趣" || text="up主不感兴趣" || text="对该up的直播不感兴趣" || text="我不想看" || text="引人不适"]',
           snapshotUrls: [
             'https://i.gkd.li/i/13625309',
             'https://i.gkd.li/i/13742257',
@@ -227,6 +239,7 @@ export default defineGkdApp({
             'https://i.gkd.li/i/18292926',
             'https://i.gkd.li/i/20710223',
             'https://i.gkd.li/i/23687208',
+            'https://i.gkd.li/i/24836772',
           ],
           excludeSnapshotUrls: [
             'https://i.gkd.li/i/18292929',
@@ -374,7 +387,7 @@ export default defineGkdApp({
           anyMatches: [
             '@[vid="more" || vid="more_layout" || id="tv.danmaku.bili.adbiz:id/more" || id="tv.danmaku.bili.adbiz:id/more_layout"] <<n [vid="ad_tint_frame" || id="tv.danmaku.bili.adbiz:id/ad_tint_frame" || id="tv.danmaku.bili.adbiz:id/ad_tint_frame"][visibleToUser=true]', // 广告、推广
             '@[vid="more"] -(3,5) [vid="live_lottie_layout"][visibleToUser=true]', // 直播
-            '[!(vid="duration") || text="课堂"] <3 ViewGroup[getChild(0).vid="cover"] > [vid="more"][visibleToUser=true]', // 纪录片、课堂推广
+            '[!(vid="duration" || vid="second_to_last_line_area") || text="课堂"] <3 ViewGroup[getChild(0).vid="cover"] > [vid="more"][visibleToUser=true]', // 纪录片、课堂推广、游戏
           ],
           exampleUrls: [
             'https://e.gkd.li/219c40c4-debf-40d8-889a-7eb39c87126c',
@@ -394,17 +407,19 @@ export default defineGkdApp({
             'https://i.gkd.li/i/17675894',
             'https://i.gkd.li/i/18306858',
 
-            // 纪录片、课堂推广
+            // 纪录片、课堂推广、游戏
             'https://i.gkd.li/i/23934632',
             'https://i.gkd.li/i/23933925',
             'https://i.gkd.li/i/23933866',
+            'https://i.gkd.li/i/24015674',
           ],
+          excludeSnapshotUrls: 'https://i.gkd.li/i/24365466',
         },
         {
           preKeys: [0],
           key: 1,
           matches:
-            '@[clickable=true] > [text="不感兴趣" || text="相似内容过多" || text="对该up的直播不感兴趣"]',
+            '@[clickable=true] > [text*="不感兴趣" || text="相似内容过多" || text="我不想看"]',
           exampleUrls: 'https://e.gkd.li/23937c2d-379c-4fb5-aaee-7295bcf0afca',
           snapshotUrls: [
             'https://i.gkd.li/i/17676025',
@@ -413,6 +428,8 @@ export default defineGkdApp({
             'https://i.gkd.li/i/18296940',
             'https://i.gkd.li/i/18306839',
             'https://i.gkd.li/i/20739391',
+            'https://i.gkd.li/i/24015691',
+            'https://i.gkd.li/i/24336415',
           ],
         },
         {
@@ -524,6 +541,36 @@ export default defineGkdApp({
           activityIds: 'com.bilibili.search2.main.BiliMainSearchActivity',
           matches: '[vid="rating_dialog_close"][clickable=true]',
           snapshotUrls: 'https://i.gkd.li/i/23440560',
+        },
+      ],
+    },
+    {
+      key: 21,
+      name: '功能类-直播自动点赞',
+      desc: '左下角提示-点击',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds:
+            'com.bilibili.bililive.room.ui.roomv3.LiveRoomActivityV3',
+          matches: '@[vid="live_combo_action_button"] > [text="点赞"]',
+          snapshotUrls: 'https://i.gkd.li/i/25238947',
+        },
+      ],
+    },
+    {
+      key: 22,
+      name: '功能类-直播自动投喂粉丝团',
+      desc: '左下角提示-点击投喂_需要0.1米谨慎开启(虽然只有一次)',
+      matchTime: 10000,
+      actionMaximum: 1,
+      rules: [
+        {
+          fastQuery: true,
+          activityIds:
+            'com.bilibili.bililive.room.ui.roomv3.LiveRoomActivityV3',
+          matches: '@[vid="live_combo_action_button"] > [text="投喂"]',
+          snapshotUrls: 'https://i.gkd.li/i/25238945',
         },
       ],
     },

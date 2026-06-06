@@ -53,7 +53,7 @@ export default defineGkdApp({
           fastQuery: true,
           activityIds: 'com.copymanga.app.MainActivity',
           matches:
-            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] +n FrameLayout >(1,2) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
+            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] <n FrameLayout >(2,3) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
           snapshotUrls: [
             'https://i.gkd.li/i/12504520',
             'https://i.gkd.li/i/12661019',
@@ -102,6 +102,14 @@ export default defineGkdApp({
           snapshotUrls: 'https://i.gkd.li/i/13372542',
         },
         {
+          key: 8,
+          fastQuery: true,
+          activityIds: 'com.beizi.ad.v2.activity.BeiZiNewInterstitialActivity',
+          matches:
+            '@[clickable=true] > ImageView[vid="beizi_interstitial_ad_close_iv"]',
+          snapshotUrls: 'https://i.gkd.li/i/25049918',
+        },
+        {
           key: 9,
           name: '字节广告-3',
           activityIds:
@@ -112,6 +120,15 @@ export default defineGkdApp({
             'https://i.gkd.li/i/12925052',
             'https://i.gkd.li/i/12925095',
           ],
+        },
+        {
+          key: 10,
+          name: '百度广告-1',
+          fastQuery: true,
+          activityIds: 'com.baidu.mobads.sdk.api.MobRewardVideoActivity',
+          matches:
+            '@ImageView[clickable=true] - RelativeLayout >2 [text="反馈"]',
+          snapshotUrls: 'https://i.gkd.li/i/25189723',
         },
       ],
     },

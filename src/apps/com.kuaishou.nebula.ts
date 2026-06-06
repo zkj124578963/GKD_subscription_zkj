@@ -42,16 +42,16 @@ export default defineGkdApp({
       name: '全屏广告-红包弹窗',
       rules: [
         {
-          key: 1,
           fastQuery: true,
           activityIds: 'com.yxcorp.gifshow.HomeActivity',
           matches:
-            '@ImageView[clickable=true] <(2,3) ViewGroup >(1,4) [text*="红包"]',
+            '@ImageView[clickable=true] -(1,2) ViewGroup > [text="点击立得奖励" || text^="邀请"]',
           exampleUrls:
             'https://m.gkd.li/101449500/f7bbd1db-f519-4ff9-96cb-4cb5b2f483a2',
           snapshotUrls: [
             'https://i.gkd.li/i/14879912',
-            'https://i.gkd.li/i/15061662',
+            'https://i.gkd.li/i/15061662', //邀请4个新用户
+            'https://i.gkd.li/i/25200787', //邀请新用户
           ],
         },
       ],
@@ -88,6 +88,19 @@ export default defineGkdApp({
           matches: '[text="确定"][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/89294dbb-4398-4561-91b7-4943ec7c98c7',
           snapshotUrls: 'https://i.gkd.li/i/23431964',
+        },
+      ],
+    },
+    {
+      key: 6,
+      name: '评价提示',
+      desc: 'x掉',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: 'com.yxcorp.gifshow.HomeActivity',
+          matches: '@[vid="close"][clickable=true] +2 * > [text*="给个好评吧"]',
+          snapshotUrls: 'https://i.gkd.li/i/22851896',
         },
       ],
     },

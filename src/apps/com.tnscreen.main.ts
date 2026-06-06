@@ -17,7 +17,7 @@ export default defineGkdApp({
           key: 0,
           fastQuery: true,
           excludeMatches: [
-            '[!(vid="welcome_ad_view_skip")] > [text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[!(vid="welcome_ad_view_skip")] > [text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
             '@[desc="close_button"] - [text="|"][visibleToUser=true]',
           ],
           matches:
@@ -35,7 +35,7 @@ export default defineGkdApp({
           key: 1,
           fastQuery: true,
           matches:
-            '[!(vid="welcome_ad_view_skip")] > [text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[!(vid="welcome_ad_view_skip")] > [text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/243c2920-9761-41c6-a142-9f6f53ab78fe',
           snapshotUrls: [
             'https://i.gkd.li/i/21383354',
@@ -69,7 +69,7 @@ export default defineGkdApp({
           fastQuery: true,
           activityIds: 'com.tcl.tcast.snapshot.view.ShotPicActivity',
           matches:
-            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] +n FrameLayout >(1,2) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
+            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] <n FrameLayout >(2,3) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
           exampleUrls: 'https://e.gkd.li/93834d55-142f-4371-ae5b-db65b168db7f',
           snapshotUrls: 'https://i.gkd.li/i/20123436',
         },

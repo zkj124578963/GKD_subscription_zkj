@@ -17,7 +17,7 @@ export default defineGkdApp({
           key: 0,
           fastQuery: true,
           matches:
-            '[text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/15858014',
             'https://i.gkd.li/i/15858024',
@@ -65,23 +65,21 @@ export default defineGkdApp({
       key: 3,
       name: '分段广告-评论区卡片广告',
       fastQuery: true,
-      activityIds:
-        'cn.xiaochuankeji.tieba.ui.post.postdetail.PostDetailActivity',
+      activityIds: '.ui.post.postdetail.PostDetailActivity',
       rules: [
         {
           key: 1,
           matches:
-            '[id="cn.xiaochuankeji.tieba:id/hh_hermes_ad_tag"] + [id="cn.xiaochuankeji.tieba:id/iv_close"][clickable=true]',
-          snapshotUrls: 'https://i.gkd.li/i/12661011',
+            '@[vid="iv_close"] <<n [vid="ad_container"][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/24209546',
+            'https://i.gkd.li/i/24380002',
+          ],
         },
         {
           preKeys: [1],
-          key: 2,
           matches: '@[clickable=true] >2 [text="不感兴趣"][visibleToUser=true]',
-          snapshotUrls: [
-            'https://i.gkd.li/i/12661028',
-            'https://i.gkd.li/i/21334232',
-          ],
+          snapshotUrls: 'https://i.gkd.li/i/21334232',
         },
       ],
     },
