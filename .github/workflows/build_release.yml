@@ -61,14 +61,19 @@ jobs:
           mkdir build_tmp
           cp -r !(build_tmp) build_tmp/
           cd build_tmp
+          # 完整安装依赖+补齐类型
           pnpm install
           pnpm add -D @types/node
-          mkdir src_build
-          mv src scripts tsconfig.json ./src_build/
-          cd src_build
+          # 只在执行构建前改名，构建完马上还原
+          mv package.json package.json.tmp
+          # 临时生成空package骗过pnpm（关键：pnpm需要存在清单文件）
+          echo "{}" > package.json
+          # 执行打包
           pnpm run build
-          cp -r dist ../
-          cd ../
+          # 打包结束立刻恢复原配置
+          rm package.json
+          mv package.json.tmp package.json
+          # 拷贝产物
           cp -r dist ../
           cd ..
           rm -rf build_tmp
