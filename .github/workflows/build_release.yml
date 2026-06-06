@@ -61,20 +61,20 @@ jobs:
           mkdir build_tmp
           cp -r !(build_tmp) build_tmp/
           cd build_tmp
+          # 第一步：安装依赖（此时package.json正常）
           pnpm install
           pnpm add -D @types/node
-          # 新建子目录src_work，只复制源码与脚本，不在这个目录放package.json
-          mkdir src_work
-          cp -r src scripts tsconfig.json src_work/
-          # 切到子目录运行build，当前目录无package.json，GKD不会报错
-          cd src_work
-          # 项目依赖还在上层build_tmp，用--prefix指定包目录
-          pnpm --prefix ../ run build
-          cp -r dist ../
-          cd ../
+          # 关键：安装完立刻改名，GKD看不见package.json
+          mv package.json _package.json.bak
+          # 执行构建，目录无package.json → 不再报错Invalid app file
+          pnpm run build
+          # 构建完成还原配置
+          mv _package.json.bak package.json
+          # 复制产物
           cp -r dist ../
           cd ..
           rm -rf build_tmp
+
       - id: version
         run: |
           version=$(node -e "import('@gkd-kit/tools').then((m) => m.stdoutGkdVersion());")
