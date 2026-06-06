@@ -63,18 +63,9 @@ jobs:
           cd build_tmp
           pnpm install
           pnpm add -D @types/node
-          # 方案：把package.json改名备份，新建同名空json放在子目录，修改构建工作目录
-          mv package.json pkg.bak
-          # 原配置存备份，新建空文件放在子目录，GKD只会读当前目录空json
-          mkdir work
-          echo "{}" > work/package.json
-          cp -r src scripts tsconfig.json work/
-          cd work
-          # 用上层备份包文件执行pnpm（--package 指向备份的pkg.bak，脚本配置全保留）
-          pnpm --package ../pkg.bak run build
-          cp -r dist ../
-          cd ../
-          mv pkg.bak package.json
+          # 关键：GKD工具支持环境变量过滤文件，不读取根package.json
+          export GKD_IGNORE_ROOT_PACKAGE_JSON=true
+          pnpm run build
           cp -r dist ../
           cd ..
           rm -rf build_tmp
