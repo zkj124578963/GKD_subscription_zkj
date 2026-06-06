@@ -1,4 +1,9 @@
 name: build_release
+env:
+  # 全局开启Action底层Node24，消除原Node20弃用提醒
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  # 关闭punycode废弃警告
+  NODE_OPTIONS: "--no-deprecation"
 
 on:
   schedule:
@@ -40,11 +45,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      # 【关键调整1：先装pnpm，再装node，保证pnpm注入PATH】
+      - uses: pnpm/action-setup@v5
+        with:
+          version: latest # 可固定版本例如 9.12.0
+
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-
-      - uses: pnpm/action-setup@v5
+          cache: 'pnpm' # 开启pnpm依赖缓存，加速安装
 
       - run: pnpm install
 
