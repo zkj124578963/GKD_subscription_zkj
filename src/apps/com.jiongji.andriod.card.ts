@@ -17,7 +17,7 @@ export default defineGkdApp({
           excludeActivityIds:
             'com.baicizhan.client.business.webview.ui.BczWebActivity',
           matches:
-            '[text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/8612bbae-7a50-4730-8071-1c47e35c27ca',
           snapshotUrls: 'https://i.gkd.li/i/21705324',
           excludeSnapshotUrls: 'https://i.gkd.li/i/21705338',
@@ -52,6 +52,21 @@ export default defineGkdApp({
           activityIds: 'com.baicizhan.main.activity.MainTabActivity',
           matches: '[text="抢先体验"] - [text="取消"]',
           snapshotUrls: 'https://i.gkd.li/i/13488652',
+        },
+      ],
+    },
+    {
+      key: 4,
+      name: '通知提示-关闭顶栏提醒',
+      rules: [
+        {
+          activityIds: 'com.baicizhan.main.activity.MainTabActivity',
+          matches:
+            '[desc="word_plan_tab"] > FrameLayout[index=2] >2 TextView[text!=null] + ImageView[clickable=true][childCount=0][index=parent.childCount.minus(1)]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/24887224',
+            'https://i.gkd.li/i/24983406',
+          ],
         },
       ],
     },

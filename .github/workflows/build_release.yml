@@ -1,9 +1,4 @@
 name: build_release
-env:
-  # 全局开启Action底层Node24，消除原Node20弃用提醒
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  # 关闭punycode废弃警告
-  NODE_OPTIONS: "--no-deprecation"
 
 on:
   schedule:
@@ -16,20 +11,24 @@ jobs:
     outputs:
       changed: ${{ steps.changes.outputs.changed }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - id: changes
         run: |
-          prev_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
-          if [ "$prev_tag" == "none" ]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-          else
-            if git diff --exit-code $prev_tag HEAD -- src; then
-              echo "No changes detected in 'src' directory between $prev_tag and the latest commit."
-              echo "changed=false" >> $GITHUB_OUTPUT
-            else
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
               echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            prev_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
+            if [ "$prev_tag" == "none" ]; then
+              echo "changed=true" >> $GITHUB_OUTPUT
+            else
+              if git diff --exit-code $prev_tag HEAD -- src; then
+                echo "No changes detected in 'src' directory between $prev_tag and the latest commit."
+                echo "changed=false" >> $GITHUB_OUTPUT
+              else
+                echo "changed=true" >> $GITHUB_OUTPUT
+              fi
             fi
           fi
 
@@ -39,40 +38,20 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
-      changes_detected: ${{ needs.check_changes.outputs.changed }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v5
-
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: 'pnpm'
+          node-version: 25
+
+      - uses: pnpm/action-setup@v4
 
       - run: pnpm install
 
-      - name: Temp build folder avoid scan bug
-        shell: bash
-        run: |
-          shopt -s extglob
-          mkdir build_tmp
-          cp -r !(build_tmp) build_tmp/
-          cd build_tmp
-          # 1.安装依赖（package.json存在）
-          pnpm install
-          pnpm add -D @types/node
-          # 2.安装完改名package.json，GKD不会读到
-          mv package.json package.json.bak
-          # 不走pnpm run build，直接node+tsx启动构建，不再依赖pnpm读取package.json脚本
-          npx tsx ./scripts/build.ts
-          # 复原配置
-          mv package.json.bak package.json
-          cp -r dist ../
-          cd ..
-          rm -rf build_tmp
+      - run: pnpm run build
 
       - id: version
         run: |
@@ -100,7 +79,7 @@ jobs:
       - name: Create Release
         id: create_release
         if: ${{ steps.commit.outcome == 'success' }}
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

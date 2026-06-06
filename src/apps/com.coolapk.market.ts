@@ -37,7 +37,7 @@ export default defineGkdApp({
           key: 1,
           fastQuery: true,
           matches:
-            '[!(id="com.coolapk.market:id/item_view") && !(vid="card_view")] > [text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[!(id="com.coolapk.market:id/item_view") && !(vid="card_view")] > [text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/12917990',
             'https://i.gkd.li/i/13211392',
@@ -83,7 +83,7 @@ export default defineGkdApp({
           ],
         },
         {
-          preKeys: [0],
+          preKeys: [0, 2], // https://github.com/AIsouler/GKD_subscription/issues/1693
           key: 1,
           anyMatches: [
             '@[clickable=true] >(1,2) [text="不感兴趣"][visibleToUser=true]',
@@ -101,6 +101,7 @@ export default defineGkdApp({
         },
         {
           preKeys: [0, 1], // 疑似酷安旧版本bug，点击不感兴趣后会再出现一个弹窗
+          key: 2,
           matches: '[text="不感兴趣"][clickable=true][visibleToUser=true]',
           snapshotUrls: 'https://i.gkd.li/i/21036817',
         },

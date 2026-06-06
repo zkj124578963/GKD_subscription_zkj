@@ -122,17 +122,24 @@ export default defineGkdApp({
           key: 7,
           fastQuery: true,
           matches:
-            '@View[clickable=true][childCount=0] <2 View < View < View < View < [name*="KMMChannelNormalFragment"] < FrameLayout <4 ViewPager < FrameLayout < FrameLayout < FrameLayout < FrameLayout < FrameLayout <5 [id="android:id/content"]',
-          snapshotUrls: 'https://i.gkd.li/i/23431044',
+            '@View[clickable=true][childCount=0][visibleToUser=true] <(1,2,3) View[checkable=true] <<4 [name*="KMMChannelNormalFragment"] < FrameLayout <(2,3,4) ViewPager <<4 FrameLayout <(1,2) FrameLayout <(2,3,5) [id="android:id/content"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/23431044',
+            'https://i.gkd.li/i/24339351',
+            'https://i.gkd.li/i/24588850',
+            'https://i.gkd.li/i/24693451',
+            'https://i.gkd.li/i/24693465',
+          ],
         },
         {
           key: 8,
           fastQuery: true,
           matches:
-            '@ImageView[clickable=true][visibleToUser=true][width<250 && height<150] <n RelativeLayout < RelativeLayout < RecyclerView < RelativeLayout < RelativeLayout < LinearLayout[desc="poster_inner_round_cell"] < RecyclerView <2 ViewGroup <2 FrameLayout <2 ScrollView <(2,3) RelativeLayout < ViewPager < FrameLayout < FrameLayout < FrameLayout < FrameLayout < FrameLayout <2 [id="android:id/content"]',
+            '@ImageView[clickable=true][visibleToUser=true][width<250 && height<150] <n RelativeLayout < RelativeLayout < RecyclerView < RelativeLayout < RelativeLayout < LinearLayout[desc="poster_inner_round_cell"] < RecyclerView <2 ViewGroup <2 FrameLayout <2 ScrollView <(2,3) RelativeLayout < ViewPager < FrameLayout < FrameLayout < FrameLayout < FrameLayout <(1,2) FrameLayout <2 [id="android:id/content"]',
           snapshotUrls: [
             'https://i.gkd.li/i/23625987',
             'https://i.gkd.li/i/23625990',
+            'https://i.gkd.li/i/24077457',
           ],
         },
         {
@@ -145,24 +152,38 @@ export default defineGkdApp({
           ],
         },
         {
-          preKeys: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+          key: 10,
+          matches:
+            '@View[clickable=true][childCount=0][width<90 && height<90] <n View + [text="广告"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/24715171',
+        },
+        {
+          preKeys: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
           key: 50,
           fastQuery: true,
-          matches: '[text="直接关闭"][visibleToUser=true]',
+          anyMatches: [
+            '[text="直接关闭"][visibleToUser=true]',
+            '@View[clickable=true] > [visibleToUser=true][text="直接关闭"]',
+          ],
           snapshotUrls: [
             'https://i.gkd.li/i/19667198',
             'https://i.gkd.li/i/19667244',
             'https://i.gkd.li/i/21139034',
+            'https://i.gkd.li/i/24715184', // 不能快速查询
           ],
         },
         {
           preKeys: [50],
           fastQuery: true,
-          matches: '[text="确认"][visibleToUser=true]',
+          anyMatches: [
+            '[text="确认"][visibleToUser=true]',
+            '@View[clickable=true] > [visibleToUser=true][text="确认"]',
+          ],
           snapshotUrls: [
             'https://i.gkd.li/i/19667102',
             'https://i.gkd.li/i/19666759',
             'https://i.gkd.li/i/21152903',
+            'https://i.gkd.li/i/24715184', // 不能快速查询
           ],
         },
       ],
@@ -205,13 +226,14 @@ export default defineGkdApp({
           name: '居中广告-2',
           fastQuery: true,
           matches:
-            '@ImageView[clickable=true][childCount=0] +2 [text^="摇动或点击" || text*="应用" || text*="立即" || text*="下载" || text*="了解" || text*="查看" || text*="详情" || text="去微信看看"][visibleToUser=true]',
+            '@ImageView[clickable=true][childCount=0] +2 [text^="摇动或点击" || text*="应用" || text*="立即" || text*="下载" || text*="了解" || text*="查看" || text*="详情" || text="去微信看看" || text*="小程序"][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/4bf0ff94-239d-4b43-900f-a375b44922e0',
           snapshotUrls: [
             'https://i.gkd.li/i/13946107',
             'https://i.gkd.li/i/14318385',
             'https://i.gkd.li/i/18476383',
             'https://i.gkd.li/i/20038310',
+            'https://i.gkd.li/i/24689566',
           ],
         },
         {

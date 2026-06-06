@@ -17,7 +17,7 @@ export default defineGkdApp({
         {
           key: 0,
           matches:
-            '[text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/f03b3648-757a-48e3-bd3b-098f8293edbf',
           snapshotUrls: 'https://i.gkd.li/i/16556555',
         },
@@ -139,6 +139,13 @@ export default defineGkdApp({
           matches:
             'ImageView[childCount=0] < @ViewGroup[childCount=1][clickable=true][visibleToUser=true] + ViewGroup > [text="广告"]',
           snapshotUrls: 'https://i.gkd.li/i/22616267',
+        },
+        {
+          key: 2,
+          fastQuery: true,
+          activityIds: 'com.baidu.baidumaps.MapsActivity',
+          matches: 'ImageView[id="com.baidu.BaiduMap:id/yellow_banner_close"]',
+          snapshotUrls: 'https://i.gkd.li/i/24633179',
         },
       ],
     },

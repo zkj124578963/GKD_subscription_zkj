@@ -52,16 +52,6 @@ export default defineGkdApp({
           snapshotUrls: 'https://i.gkd.li/i/14228348',
         },
         {
-          key: 3,
-          name: '勾选[已了解此应用未经检测，可能存在风险]',
-          matches:
-            '[vid="checkbox" || vid="deleted_file_state_cb"][checked=false]',
-          snapshotUrls: [
-            'https://i.gkd.li/i/14595443',
-            'https://i.gkd.li/i/22870985',
-          ],
-        },
-        {
           key: 4,
           position: {
             left: 'width * 1.5394',
@@ -74,6 +64,62 @@ export default defineGkdApp({
             'https://i.gkd.li/i/14969116',
             'https://i.gkd.li/i/17158050',
           ],
+        },
+      ],
+    },
+    {
+      key: 2,
+      name: '功能类-授权本次安装',
+      rules: [
+        {
+          fastQuery: true,
+          position: {
+            left: 'width * 0.4609',
+            top: 'height * 0.75',
+          },
+          activityIds: '.PackageInterceptActivity',
+          matches:
+            '[vid="tv_install_guide"][text*="授权本次安装"][visibleToUser=true]',
+          exampleUrls: 'https://e.gkd.li/6ad6e4c6-3cb7-41b2-a37b-bcaa3c06de34',
+          snapshotUrls: 'https://i.gkd.li/i/24465121',
+        },
+      ],
+    },
+    {
+      key: 3,
+      name: '功能类-自动继续安装高危风险应用',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.PackageInterceptActivity',
+          matches: [
+            '[text="该应用存在高危风险"][visibleToUser=true]',
+            '@[clickable=true] >2 [text="仍要继续"][visibleToUser=true]',
+          ],
+          exampleUrls: 'https://e.gkd.li/2961e749-6aac-4f74-b7f7-268ecc0e14f4',
+          snapshotUrls: 'https://i.gkd.li/i/24540505',
+        },
+      ],
+    },
+    {
+      key: 4,
+      name: '功能类-勾选[已了解此应用未经检测，可能存在风险]',
+      fastQuery: true,
+      activityIds: ['.PackageInterceptActivity', '.PackageInstallerActivity'],
+      rules: [
+        {
+          key: 0,
+          matches:
+            '[vid="checkbox" || vid="deleted_file_state_cb"][checked=false]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/14595443',
+            'https://i.gkd.li/i/22870985',
+          ],
+        },
+        {
+          preKeys: [0],
+          matches: '@LinearLayout[clickable=true][id=null] > [text="继续安装"]',
+          snapshotUrls: 'https://i.gkd.li/i/22870985',
         },
       ],
     },

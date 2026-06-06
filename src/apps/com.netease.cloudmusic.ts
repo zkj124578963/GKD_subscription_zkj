@@ -20,7 +20,7 @@ export default defineGkdApp({
             '.music.biz.search.activity.SearchActivity',
           ],
           matches:
-            '[text*="跳过" || text*="Skip"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[text*="跳过" || text*="Skip"][text.length<10][width<500 && height<200][visibleToUser=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/15092772',
             'https://i.gkd.li/i/17892200', // 'Skip' for English users.
@@ -133,9 +133,10 @@ export default defineGkdApp({
             '.music.biz.rn.activity.LayerReactNativeActivity',
             '.music.biz.comment.activity.CommentActivity',
           ],
-          excludeMatches: '[text="当前场景"][visibleToUser=true]',
+          excludeMatches:
+            '[text="当前场景" || vid="mainDrawerContainer"][visibleToUser=true]',
           matches:
-            '[vid="dsl_dialog_root" || text^="邀您开通VIP" || text^="本周已免费试听" || text^="免费听模式体验中" || text$="立即续费" || text*="小组件到桌面"][visibleToUser=true]',
+            '[vid="dsl_dialog_root" || text^="邀您开通VIP" || text^="本周已免费试听" || text^="免费听模式体验中" || text^="续费后，即可畅听" || text*="小组件到桌面"][visibleToUser=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/13804534',
             'https://i.gkd.li/i/13848913',
@@ -155,6 +156,7 @@ export default defineGkdApp({
             'https://i.gkd.li/i/15404777',
             'https://i.gkd.li/i/20115204',
             'https://i.gkd.li/i/20159204',
+            'https://i.gkd.li/i/24157914',
           ],
         },
       ],
@@ -191,6 +193,15 @@ export default defineGkdApp({
             'https://i.gkd.li/i/20218350',
           ],
           excludeSnapshotUrls: 'https://i.gkd.li/i/20097306', // 正常开通会员页面
+        },
+        {
+          key: 1,
+          fastQuery: true,
+          activityIds:
+            'com.netease.cloudmusic.music.biz.rn.activity.CashierRNActivity',
+          matches:
+            '[text="忍痛离开"] < @ViewGroup[clickable=true] -n * > [text$="VIP可畅享千万曲库"]',
+          snapshotUrls: 'https://i.gkd.li/i/24548104',
         },
       ],
     },

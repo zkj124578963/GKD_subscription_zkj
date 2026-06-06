@@ -27,12 +27,6 @@ export default defineGkdApp({
             '@Image[text="close"] < View[childCount=4] <2 * <<n [id="com.sina.weibo:id/container"]',
           snapshotUrls: 'https://i.gkd.li/i/14033735',
         },
-        {
-          key: 28,
-          activityIds: '.page.recommend.AccountRecommendActivity',
-          matches: '[vid="recommend_close_activity"]',
-          snapshotUrls: 'https://i.gkd.li/i/23837591',
-        },
       ],
     },
     {
@@ -84,6 +78,7 @@ export default defineGkdApp({
         '.feed.DetailWeiboActivity',
         '.feed.detailrefactor.DetailPageActivity',
         '.feed.SubCommentActiity',
+        '.feed.halfcontainer.HalfContainerPageActivity',
       ],
       rules: [
         {
@@ -93,6 +88,7 @@ export default defineGkdApp({
             'https://i.gkd.li/i/13852321',
             'https://i.gkd.li/i/19526000',
             'https://i.gkd.li/i/21828244',
+            'https://i.gkd.li/i/24291704',
           ],
         },
         {
@@ -303,10 +299,11 @@ export default defineGkdApp({
         {
           preKeys: [0],
           matchRoot: true,
-          matches: '[text="不感兴趣"][clickable=true]',
+          matches: '[text$="不感兴趣"][clickable=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/19551857',
             'https://i.gkd.li/i/19552282',
+            'https://i.gkd.li/i/24211723',
           ],
         },
       ],
@@ -315,17 +312,25 @@ export default defineGkdApp({
       key: 27,
       name: '分段广告-评论区荐读',
       fastQuery: true,
-      activityIds: '.feed.detailrefactor.DetailPageActivity',
+      activityIds: [
+        '.feed.detailrefactor.DetailPageActivity',
+        '.feed.DetailWeiboActivity',
+        '.feed.halfcontainer.HalfContainerPageActivity',
+      ],
       rules: [
         {
           key: 0,
           matches: '@[vid="ll_close"] > [text="荐读"][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/bab872e2-6967-49f5-8443-46af8f225d8f',
-          snapshotUrls: 'https://i.gkd.li/i/21828298',
+          snapshotUrls: [
+            'https://i.gkd.li/i/21828298',
+            'https://i.gkd.li/i/24237728',
+            'https://i.gkd.li/i/24291674',
+          ],
         },
         {
           preKeys: [0],
-          matches: '[text="对此内容不感兴趣"][visibleToUser=true]',
+          matches: '[text$="不感兴趣"][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/4d35d427-f6ab-42bf-a369-65c5b602fcdf',
           snapshotUrls: 'https://i.gkd.li/i/21828292',
         },

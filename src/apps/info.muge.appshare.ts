@@ -56,58 +56,71 @@ export default defineGkdApp({
       rules: [
         {
           key: 0,
-          name: '软件详情页卡片广告',
           fastQuery: true,
-          activityIds: 'info.muge.appshare.view.app.detail.AppDetailActivity',
+          activityIds: [
+            'info.muge.appshare.view.app.detail.AppDetailActivity',
+            'info.muge.appshare.view.app.detail.v4.AppDetailV4Activity',
+            'info.muge.appshare.view.search.v4.SearchActivity',
+          ],
           matches:
-            'FrameLayout[childCount=5] > @FrameLayout[visibleToUser=true] > ImageView <<n [vid="adContainer"]',
-          snapshotUrls: 'https://i.gkd.li/i/14382413',
-        },
-        {
-          key: 1,
-          name: '搜索页卡片广告',
-          fastQuery: true,
-          activityIds: 'info.muge.appshare.view.search.app.SearchAppActivity',
-          matches:
-            'FrameLayout[childCount=5] > @FrameLayout[visibleToUser=true] > ImageView <<n [vid="adView"]',
-          snapshotUrls: 'https://i.gkd.li/i/14368946',
+            'FrameLayout[childCount=5] > @FrameLayout[childCount=1][visibleToUser=true][width<50 && height<50] > ImageView[childCount=0] <<n [vid="adContainer" || vid="adView" || vid="cardAd"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/14382413',
+            'https://i.gkd.li/i/25124086',
+            'https://i.gkd.li/i/25124059',
+          ],
         },
       ],
     },
     {
       key: 2,
       name: '功能类-自动签到',
-      fastQuery: true,
-      matchTime: 10000,
-      actionMaximum: 1,
-      resetMatch: 'app',
-      activityIds: 'info.muge.appshare.view.main.MainActivity',
       rules: [
         {
           key: 0,
+          fastQuery: true,
+          activityIds: '.view.main.MainActivity',
           matches: '[text="签到"][vid="tvSign"]',
           snapshotUrls: 'https://i.gkd.li/i/13931265',
           excludeSnapshotUrls: 'https://i.gkd.li/i/22319703', // 避免点击首页签到按钮
         },
         {
-          preKeys: [0],
-          matches: '[text="确定" || text="我知道了"]',
+          key: 1,
+          activityIds: '.MainActivity',
+          matches: '[desc="头像"] +3 @View[clickable=true] > [text="签到"]',
+          snapshotUrls: 'https://i.gkd.li/i/24376300',
+          excludeSnapshotUrls: [
+            'https://i.gkd.li/i/22319703',
+            'https://i.gkd.li/i/24563260',
+          ],
+        },
+        {
+          preKeys: [0, 1],
+          fastQuery: true,
+          activityIds: ['.view.main.MainActivity', '.MainActivity'],
+          anyMatches: [
+            '[text="确定"]',
+            '@[clickable=true] > [childCount=0][text="我知道了"]',
+            '[vid="tvClose"][text="我知道了"][clickable=true][visibleToUser=true]',
+          ],
           snapshotUrls: [
             'https://i.gkd.li/i/13931279',
             'https://i.gkd.li/i/20259829',
+            'https://i.gkd.li/i/24376307',
+            'https://i.gkd.li/i/25125005',
           ],
         },
       ],
     },
     {
       key: 3,
-      name: '分段广告-软件详情页广告',
+      name: '分段广告',
       desc: '点击关闭-点击不感兴趣',
-      fastQuery: true,
-      activityIds: 'info.muge.appshare.view.app.detail.AppDetailActivity',
       rules: [
         {
           key: 0,
+          fastQuery: true,
+          activityIds: 'info.muge.appshare.view.app.detail.AppDetailActivity',
           matches:
             'FrameLayout[childCount=3] >3 [desc^="dislike"] > @View[clickable=true] <<n [id="info.muge.appshare:id/adContainer"]',
           exampleUrls:
@@ -116,21 +129,53 @@ export default defineGkdApp({
         },
         {
           key: 1,
+          fastQuery: true,
+          activityIds: 'info.muge.appshare.view.app.detail.AppDetailActivity',
           matches:
             'FrameLayout[childCount=3] >2 WebView >6 @View[visibleToUser=true] > Image <<n [vid="adContainer"]',
           exampleUrls:
             'https://m.gkd.li/57941037/fefece63-2ec2-413c-a292-4583d58478fe',
           snapshotUrls: 'https://i.gkd.li/i/14160959',
         },
-        // 中间的key预留给第一段广告
+        {
+          key: 2,
+          fastQuery: true,
+          activityIds: '.MainActivity',
+          matches:
+            '@View[clickable=true][childCount=0][visibleToUser=true] < FrameLayout[desc^="dislike"] <n * > FrameLayout >n [text="广告"]',
+          exampleUrls: 'https://e.gkd.li/00bf6a60-c461-4970-bb73-b063376cbafd',
+          snapshotUrls: [
+            'https://i.gkd.li/i/24541497',
+            'https://i.gkd.li/i/24551719',
+            'https://i.gkd.li/i/24612011',
+            'https://i.gkd.li/i/24612129',
+          ],
+        },
+        {
+          key: 3,
+          activityIds: '.MainActivity',
+          excludeMatches: '[text="热门搜索"][visibleToUser=true]', // 搜索页误触键盘，排除匹配搜索页
+          matches:
+            'ViewFactoryHolder FrameLayout[childCount=5] > FrameLayout[childCount=1] > ImageView[childCount=0][id=null][desc=null][width<60 && height<60]',
+          exampleUrls: 'https://e.gkd.li/1dfab1f2-f3d3-4f42-b421-d504083337c0',
+          snapshotUrls: 'https://i.gkd.li/i/24541525',
+          excludeSnapshotUrls: 'https://i.gkd.li/i/24612044',
+        },
 
         {
-          // preKeys有概率导致二段不触发
-          key: 10,
-          matches: '@LinearLayout > [text="不感兴趣"]',
+          preKeys: [0, 1, 2, 3],
+          fastQuery: true,
+          activityIds: [
+            'info.muge.appshare.view.app.detail.AppDetailActivity',
+            '.MainActivity',
+          ],
+          matches: '@[clickable=true] >(1,2) [text="不感兴趣"]',
           exampleUrls:
             'https://m.gkd.li/57941037/27a5eebc-a55a-466e-85f3-7642c23b4b3d',
-          snapshotUrls: 'https://i.gkd.li/i/14161009',
+          snapshotUrls: [
+            'https://i.gkd.li/i/14161009',
+            'https://i.gkd.li/i/24612850',
+          ],
         },
       ],
     },
@@ -174,7 +219,7 @@ export default defineGkdApp({
           fastQuery: true,
           activityIds: '.view.main.MainActivity',
           matches:
-            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] +n FrameLayout >(1,2) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
+            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] <n FrameLayout >(2,3) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
           exampleUrls: 'https://e.gkd.li/b4d9d653-a4ad-4e4f-a8f5-30b1485547b5',
           snapshotUrls: 'https://i.gkd.li/i/15211765',
         },
@@ -211,6 +256,21 @@ export default defineGkdApp({
           exampleUrls:
             'https://m.gkd.li/57941037/aae3c59c-8eac-452c-984e-84ee9b97e986',
           snapshotUrls: 'https://i.gkd.li/i/14792822',
+        },
+      ],
+    },
+    {
+      key: 7,
+      name: '更新提示',
+      matchTime: 10000,
+      actionMaximum: 1,
+      resetMatch: 'app',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: 'info.muge.appshare.view.main.MainActivity',
+          matches: '@[vid="tvCancel"] + [vid="tvUpdate"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/25123777',
         },
       ],
     },

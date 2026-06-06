@@ -18,12 +18,12 @@ export default defineGkdApp({
           key: 0,
           excludeActivityIds: '.search.ui.search.SearchOperateActivity',
           matches:
-            '[text*="跳过"][text.length<10][width<400 && height<200][visibleToUser=true]',
+            '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/15048443',
             'https://i.gkd.li/i/15048416',
-            'https://i.gkd.li/i/16388942', // 防止误触
           ],
+          excludeSnapshotUrls: 'https://i.gkd.li/i/16388942',
         },
         {
           key: 1,
@@ -33,10 +33,16 @@ export default defineGkdApp({
           },
           excludeMatches: '[text*="跳过"]',
           matches: '[vid="native_container"]',
-          snapshotUrls: [
-            'https://i.gkd.li/i/15048354',
-            'https://i.gkd.li/i/15048376', // 防止在此页面提前触发规则
+          snapshotUrls: 'https://i.gkd.li/i/15048354',
+          excludeSnapshotUrls: 'https://i.gkd.li/i/15048376',
+        },
+        {
+          key: 2,
+          anyMatches: [
+            '@View[text=null][clickable=true][childCount=0][visibleToUser=true][width<200&&height<200] +(1,2) TextView[index=parent.childCount.minus(1)][childCount=0] <n FrameLayout[childCount>2][text=null][desc=null] >(n+6) [text*="第三方应用" || text*="扭动手机" || text*="点击或上滑" || text*="省钱好物" || text*="扭一扭"][visibleToUser=true]',
+            'FrameLayout > FrameLayout[childCount>2][text=null][desc=null] > @View[text=null][clickable=true][childCount=0][visibleToUser=true][width<200&&height<200] +(1,2) TextView[index=parent.childCount.minus(1)][childCount=0][visibleToUser=true]',
           ],
+          snapshotUrls: 'https://i.gkd.li/i/24539634',
         },
       ],
     },
@@ -108,7 +114,7 @@ export default defineGkdApp({
             'com.xunlei.downloadprovider.launch.LaunchActivity',
           ],
           matches:
-            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] +n FrameLayout >(1,2) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
+            '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] <n FrameLayout >(2,3) [text^="立即" || text$="详情" || text^="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
           snapshotUrls: [
             'https://i.gkd.li/i/12882132',
             'https://i.gkd.li/i/12901374',
@@ -139,11 +145,16 @@ export default defineGkdApp({
         {
           key: 5,
           fastQuery: true,
-          activityIds:
+          activityIds: [
             'com.bytedance.sdk.openadsdk.core.component.reward.activity.TTFullScreenVideoActivity',
+            'com.bytedance.sdk.openadsdk.stub.activity.Stub_Standard_Portrait_Activity',
+          ],
           matches:
-            '@ImageView[childCount=0] < ViewGroup[childCount=1] < ViewGroup[childCount=1] < ViewGroup[childCount=1] < ViewGroup[childCount=1] + ViewGroup >4 [text="反馈"][visibleToUser=true]',
-          snapshotUrls: 'https://i.gkd.li/i/23762955',
+            '@ImageView[childCount=0] < ViewGroup[childCount=1] < ViewGroup[childCount=1] < ViewGroup[childCount=1] < ViewGroup[childCount=1] +2 ViewGroup >3 [text="广告"][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/23762955',
+            'https://i.gkd.li/i/24541418',
+          ],
         },
       ],
     },

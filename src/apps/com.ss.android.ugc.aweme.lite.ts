@@ -74,11 +74,33 @@ export default defineGkdApp({
       name: '全屏广告',
       rules: [
         {
+          key: 0,
           activityIds:
             'com.ss.android.ugc.aweme.live.LiveDummyHybridTransparentActivity',
           matches:
             '@Image[clickable=true][text!=null][width<100 && height<100] +4 View >2 [text="同意协议并查看额度"][visibleToUser=true]',
           snapshotUrls: 'https://i.gkd.li/i/23558501',
+        },
+        {
+          key: 1,
+          fastQuery: true,
+          activityIds: 'com.ss.android.ugc.aweme.main.MainActivity',
+          matches:
+            '@UIView[text="不感兴趣"][clickable=true] +2 FlattenUIText[text="不感兴趣"]',
+          snapshotUrls: 'https://i.gkd.li/i/24123937',
+        },
+      ],
+    },
+    {
+      key: 12,
+      name: '全屏广告-添加桌面小组件',
+      desc: 'x掉',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: 'com.ss.android.ugc.aweme.main.MainActivity',
+          matches: '@ImageView[clickable=true] - [text$="桌面小组件"]',
+          snapshotUrls: 'https://i.gkd.li/i/25208769',
         },
       ],
     },
