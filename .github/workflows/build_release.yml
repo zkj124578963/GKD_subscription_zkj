@@ -1,4 +1,9 @@
 name: build_release
+env:
+  # 全局开启Action底层Node24，消除原Node20弃用提醒
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  # 关闭punycode废弃警告
+  NODE_OPTIONS: "--no-deprecation"
 
 on:
   schedule:
@@ -11,7 +16,7 @@ jobs:
     outputs:
       changed: ${{ steps.changes.outputs.changed }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - id: changes
@@ -34,30 +39,39 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
-      changes_detected: ${{ steps.changes.outputs.changed }}
+      changes_detected: ${{ needs.check_changes.outputs.changed }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v5
+
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
+          cache: 'pnpm'
 
-      - uses: pnpm/action-setup@v4
+      - run: pnpm install
 
-      - name: Hide package.json avoid scan error
-
+      - name: Temp build folder avoid scan bug
+        shell: bash
         run: |
-          mv package.json _tmp_package.json
-      - run: pnpm run build
-
-      - name: Restore package.json
-        run: |
-          mv _tmp_package.json package.json
-
-      - run: pnpm run build
-
+          shopt -s extglob
+          mkdir build_tmp
+          cp -r !(build_tmp) build_tmp/
+          cd build_tmp
+          pnpm install
+          pnpm add -D @types/node
+          mkdir src_build
+          mv src scripts tsconfig.json ./src_build/
+          cd src_build
+          pnpm run build
+          cp -r dist ../
+          cd ../
+          cp -r dist ../
+          cd ..
+          rm -rf build_tmp
       - id: version
         run: |
           version=$(node -e "import('@gkd-kit/tools').then((m) => m.stdoutGkdVersion());")
