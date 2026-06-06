@@ -59,15 +59,16 @@ jobs:
         run: |
           shopt -s extglob
           mkdir build_tmp
-          # 复制全部文件，仅排除build_tmp，保证scripts、tsconfig齐全
           cp -r !(build_tmp) build_tmp/
           cd build_tmp
-          # 1.安装依赖 2.补充node类型 3.构建
+          # 1.先安装依赖+安装@types/node（此时package.json还在）
           pnpm install
           pnpm add -D @types/node
-          # GKD工具误读根package.json → 临时移出
+          # 2.安装完再移走package.json避免gkd工具误读
           mv package.json ../tmp.pkg
+          # 3.执行构建
           pnpm run build
+          # 4.构建结束复原
           mv ../tmp.pkg package.json
           cp -r dist ../
           cd ..
