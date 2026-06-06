@@ -2,7 +2,7 @@ import { defineGkdApp } from '@gkd-kit/define';
 
 export default defineGkdApp({
   id: 'com.fd84994ce2.lfbdc54d2e.db77a36ef120260606',
-  name: '瓜子影视 v3.0.4.8',
+  name: '瓜子影视 v3.0.4.9',
   groups: [
     {
       key: 3,
