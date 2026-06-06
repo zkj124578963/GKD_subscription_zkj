@@ -61,15 +61,14 @@ jobs:
           mkdir build_tmp
           cp -r !(build_tmp) build_tmp/
           cd build_tmp
-          # 1.先安装依赖+安装@types/node（此时package.json还在）
           pnpm install
           pnpm add -D @types/node
-          # 2.安装完再移走package.json避免gkd工具误读
-          mv package.json ../tmp.pkg
-          # 3.执行构建
+          mkdir src_build
+          mv src scripts tsconfig.json ./src_build/
+          cd src_build
           pnpm run build
-          # 4.构建结束复原
-          mv ../tmp.pkg package.json
+          cp -r dist ../
+          cd ../
           cp -r dist ../
           cd ..
           rm -rf build_tmp
