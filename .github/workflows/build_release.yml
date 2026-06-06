@@ -58,23 +58,25 @@ jobs:
         shell: bash
         run: |
           shopt -s extglob
-          mkdir build_tmp
-          cp -r !(build_tmp) build_tmp/
-          cd build_tmp
+          # 1. 真实项目目录放外面，只用来装依赖
+          mkdir real_project
+          cp -r !(build_tmp|real_project) real_project/
+          cd real_project
           pnpm install
           pnpm add -D @types/node
-          # 新建子目录src_work，只复制源码与脚本，不在这个目录放package.json
-          mkdir src_work
-          cp -r src scripts tsconfig.json src_work/
-          # 切到子目录运行build，当前目录无package.json，GKD不会报错
-          cd src_work
-          # 项目依赖还在上层build_tmp，用--prefix指定包目录
-          pnpm --prefix ../ run build
-          cp -r dist ../
           cd ../
+
+          # 2. build_tmp只拷贝源码、脚本，**全程不放package.json**
+          mkdir build_tmp
+          cp -r real_project/src real_project/scripts real_project/tsconfig.json build_tmp/
+          cd build_tmp
+
+          # 用--dir 指定依赖目录在外面real_project，pnpm正常读scripts配置
+          pnpm --dir ../real_project run build
+
           cp -r dist ../
           cd ..
-          rm -rf build_tmp
+          rm -rf build_tmp real_project
       - id: version
         run: |
           version=$(node -e "import('@gkd-kit/tools').then((m) => m.stdoutGkdVersion());")
