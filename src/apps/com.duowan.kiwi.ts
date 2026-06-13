@@ -77,8 +77,7 @@ export default defineGkdApp({
           key: 1,
           name: '开启推送通知弹窗',
           activityIds: '.homepage.Homepage',
-          matches:
-            '[vid="iv_close"]',
+          matches: '[vid="iv_close"]',
           snapshotUrls: 'https://i.gkd.li/i/28908163',
         },
       ],
