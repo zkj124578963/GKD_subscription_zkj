@@ -73,6 +73,13 @@ export default defineGkdApp({
             '[id="com.duowan.kiwi:id/animation_view"] + [id="com.duowan.kiwi:id/v_close"]',
           snapshotUrls: 'https://i.gkd.li/i/13625453',
         },
+        {
+          key: 1,
+          name: '开启推送通知弹窗',
+          activityIds: '.homepage.Homepage',
+          matches: '[vid="iv_close"]',
+          snapshotUrls: 'https://i.gkd.li/i/28908163',
+        },
       ],
     },
     {
